@@ -4,6 +4,7 @@ setlocal EnableDelayedExpansion
 title Ministry of Fisheries - Feedback Widget
 
 cd /d "%~dp0"
+set "PATH=%SystemRoot%\System32;%PATH%"
 
 echo =========================================================
 echo    Ministry of Fisheries - Feedback Widget Server
@@ -12,12 +13,10 @@ echo.
 
 :: 1. Detect PHP executable
 set "PHP_BIN="
-where php >nul 2>nul
-if %errorlevel% equ 0 (
-    set "PHP_BIN=php"
-) else if exist "%LOCALAPPDATA%\Microsoft\WinGet\Packages\PHP.PHP.8.2_Microsoft.Winget.Source_8wekyb3d8bbwe\php.exe" (
+for /f "delims=" %%I in ('where php 2^>nul') do if not defined PHP_BIN set "PHP_BIN=%%I"
+if not defined PHP_BIN if exist "%LOCALAPPDATA%\Microsoft\WinGet\Packages\PHP.PHP.8.2_Microsoft.Winget.Source_8wekyb3d8bbwe\php.exe" (
     set "PHP_BIN=%LOCALAPPDATA%\Microsoft\WinGet\Packages\PHP.PHP.8.2_Microsoft.Winget.Source_8wekyb3d8bbwe\php.exe"
-) else if exist "C:\xampp\php\php.exe" (
+) else if not defined PHP_BIN if exist "C:\xampp\php\php.exe" (
     set "PHP_BIN=C:\xampp\php\php.exe"
 )
 
@@ -30,6 +29,52 @@ if "%PHP_BIN%"=="" (
 )
 
 echo [OK] Using PHP: %PHP_BIN%
+
+:: 1a. Verify the extensions required by the API
+for %%I in ("%PHP_BIN%") do set "PHP_DIR=%%~dpI"
+set "PHP_EXTENSION_ARGS="
+set "MISSING_EXTENSIONS="
+"%PHP_BIN%" -m | findstr /i /x "mbstring" >nul
+if errorlevel 1 (
+    if exist "%PHP_DIR%ext\php_mbstring.dll" (
+        set "PHP_EXTENSION_ARGS=!PHP_EXTENSION_ARGS! -d extension=mbstring"
+    ) else (
+        set "MISSING_EXTENSIONS=!MISSING_EXTENSIONS! mbstring"
+    )
+)
+"%PHP_BIN%" -m | findstr /i /x "pdo_mysql" >nul
+if errorlevel 1 (
+    if exist "%PHP_DIR%ext\php_pdo_mysql.dll" (
+        set "PHP_EXTENSION_ARGS=!PHP_EXTENSION_ARGS! -d extension=pdo_mysql"
+    ) else (
+        set "MISSING_EXTENSIONS=!MISSING_EXTENSIONS! pdo_mysql"
+    )
+)
+"%PHP_BIN%" -m | findstr /i /x "openssl" >nul
+if errorlevel 1 (
+    if exist "%PHP_DIR%ext\php_openssl.dll" (
+        set "PHP_EXTENSION_ARGS=!PHP_EXTENSION_ARGS! -d extension=openssl"
+    ) else (
+        set "MISSING_EXTENSIONS=!MISSING_EXTENSIONS! openssl"
+    )
+)
+if defined PHP_EXTENSION_ARGS set "PHP_EXTENSION_ARGS=-d ""extension_dir=%PHP_DIR%ext"" !PHP_EXTENSION_ARGS!"
+"%PHP_BIN%" %PHP_EXTENSION_ARGS% -m | findstr /i /x "mbstring" >nul
+if errorlevel 1 set "MISSING_EXTENSIONS=!MISSING_EXTENSIONS! mbstring"
+"%PHP_BIN%" %PHP_EXTENSION_ARGS% -m | findstr /i /x "pdo_mysql" >nul
+if errorlevel 1 set "MISSING_EXTENSIONS=!MISSING_EXTENSIONS! pdo_mysql"
+"%PHP_BIN%" %PHP_EXTENSION_ARGS% -m | findstr /i /x "openssl" >nul
+if errorlevel 1 set "MISSING_EXTENSIONS=!MISSING_EXTENSIONS! openssl"
+if defined MISSING_EXTENSIONS (
+    echo [ERROR] PHP is missing required extensions:%MISSING_EXTENSIONS%
+    echo The API requires mbstring, pdo_mysql, and openssl.
+    echo PHP configuration currently in use:
+    "%PHP_BIN%" --ini
+    echo Enable the missing extensions in that php.ini, then run this file again.
+    echo.
+    pause
+    exit /b 1
+)
 
 :: 2. Check if MySQL is running
 tasklist /fi "imagename eq mysqld.exe" 2>nul | find /i "mysqld.exe" >nul
@@ -68,7 +113,7 @@ echo.
 start "" "%URL%"
 
 :: Run PHP built-in server serving public directory
-"%PHP_BIN%" -S %HOST%:%PORT% -t public
+"%PHP_BIN%" %PHP_EXTENSION_ARGS% -S %HOST%:%PORT% -t public
 
 echo.
 pause
