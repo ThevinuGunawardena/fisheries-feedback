@@ -1,0 +1,2 @@
+# Blocks direct browsing of the API folder listing; PHP endpoints still work
+Options -Indexes
