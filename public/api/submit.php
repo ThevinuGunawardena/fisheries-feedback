@@ -128,8 +128,8 @@ try {
     $insert = $pdo->prepare(
         'INSERT INTO feedback_submissions
            (reference_number, full_name, email, phone, topic_code, topic_label,
-            message, word_count, payload, ip_hash, user_agent)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            message, word_count, payload, ip_hash, user_agent, status)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
 
     $reference = '';
@@ -139,6 +139,7 @@ try {
 
         $payload = json_encode([
             'reference'    => $reference,
+            'status'       => 'in_progress',
             'submitted_at' => gmdate('c'),
             'name'         => $name !== '' ? $name : null,
             'email'        => $email !== '' ? $email : null,
@@ -156,6 +157,7 @@ try {
                 $phone, $topic, $topicLabel,
                 $message, $wordCount, $payload,
                 $ipHash, $userAgent !== '' ? $userAgent : null,
+                'in_progress',
             ]);
             $saved = true;
         } catch (PDOException $e) {
@@ -189,7 +191,15 @@ if ($email !== '') {
 
         if (cfg('mail.enabled', true) && !$overLimit) {
             try {
-                send_confirmation_email($email, $name !== '' ? $name : null, $reference, $topicLabel, $phone);
+                send_confirmation_email(
+                    $email,
+                    $name !== '' ? $name : null,
+                    $reference,
+                    $topicLabel,
+                    $phone,
+                    $message,
+                    'In Progress'
+                );
                 $emailStatus = 'sent';
             } catch (Throwable $mailErr) {
                 $emailStatus = 'failed';
@@ -206,7 +216,12 @@ if ($email !== '') {
     $emailResult = $emailStatus;
 }
 
-json_out(['ok' => true, 'reference' => $reference, 'email' => $emailResult], 201);
+json_out([
+    'ok'        => true,
+    'reference' => $reference,
+    'status'    => 'in_progress',
+    'email'     => $emailResult,
+], 201);
 
 // ------------------------------------------------------------------ helpers
 /** e.g. FISH-20260929-K7M2QX – no 0/O/1/I so it is easy to read out over the phone. */
