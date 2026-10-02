@@ -44,15 +44,33 @@ return [
 
     'mail' => [
         'enabled'    => true,
-        'host'       => '127.0.0.1',   // dev: Mailpit/MailHog on 1025. Production: your ministry mail relay
+
+        // --- SMTP Provider Options ---
+        // Option 1: Gmail SMTP (to deliver to real inboxes like eadpps17@gmail.com)
+        //   'host'       => 'smtp.gmail.com',
+        //   'port'       => 587,
+        //   'secure'     => 'tls',
+        //   'username'   => 'your-email@gmail.com',
+        //   'password'   => 'your-16-character-google-app-password',
+        //   'from_email' => 'your-email@gmail.com',
+        //
+        // Option 2: Local mail catcher (Mailpit / MailHog) for local development
+        //   'host'       => '127.0.0.1',
+        //   'port'       => 1025,
+        //   'secure'     => '',
+        //   'username'   => '',
+        //   'password'   => '',
+        //   'from_email' => 'no-reply@fisheries.gov.lk',
+
+        'host'       => '127.0.0.1',
         'port'       => 1025,
         'secure'     => '',            // '' = none, 'tls' = STARTTLS (port 587), 'ssl' = SMTPS (port 465)
-        'username'   => '',            // leave '' if the server needs no login
+        'username'   => '',
         'password'   => '',
-        'from_email' => 'no-reply@fisheries.gov.example',
+        'from_email' => 'no-reply@fisheries.gov.lk',
         'from_name'  => 'Ministry of Fisheries',
-        'reply_to'   => '',            // optional, e.g. 'feedback@fisheries.gov.example'
-        'timeout'    => 8,             // seconds
+        'reply_to'   => '',
+        'timeout'    => 10,
     ],
 
     // true = include technical error text in API responses. Keep false in production.

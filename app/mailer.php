@@ -51,12 +51,13 @@ function send_confirmation_email(
 
     // ---------------------------------------------------------------- Plain Text Body
     $text = "{$greeting}\n\n"
-          . "Thank you for contacting the Ministry of Fisheries.\n"
-          . "We have received your submission and your request status is currently: {$statusText}.\n\n"
+          . "This email confirms that your submission has been SUCCESSFULLY RECEIVED by the Ministry of Fisheries.\n"
+          . "Your request has been officially recorded and its current status is: {$statusText}.\n\n"
           . "=========================================================\n"
-          . "               SUBMISSION SUMMARY\n"
+          . "             SUBMISSION CONTENT SUMMARY\n"
           . "=========================================================\n"
           . "Reference Number : {$reference}\n"
+          . "Receipt Status   : Successfully Received\n"
           . "Current Status   : {$statusText} (Under Ministry Review)\n"
           . "Date Submitted   : {$submittedDate}\n"
           . "Topic            : {$topicLabel}\n"
@@ -65,18 +66,20 @@ function send_confirmation_email(
     if ($toName !== null && trim($toName) !== '') {
         $text .= "Contact Name     : " . trim($toName) . "\n";
     }
+    $text .= "Recipient Email  : {$toEmail}\n";
 
     $text .= "---------------------------------------------------------\n"
-          . "SUMMARY OF YOUR MESSAGE ({$wordCount} words):\n"
+          . "SUMMARY OF YOUR SUBMITTED MESSAGE ({$wordCount} words):\n"
           . "---------------------------------------------------------\n"
           . "{$cleanMessage}\n\n"
           . "=========================================================\n"
           . "WHAT HAPPENS NEXT?\n"
           . "=========================================================\n"
-          . "1. Your case is marked as \"{$statusText}\" in our system.\n"
-          . "2. A Ministry officer is reviewing your submission and will contact\n"
+          . "1. Your message has been successfully received and logged into our database.\n"
+          . "2. Your case is currently marked as \"{$statusText}\" for official assessment.\n"
+          . "3. A Ministry officer is reviewing your submission and will contact\n"
           . "   you on {$cleanPhone} if further details are needed.\n"
-          . "3. Please retain your reference number ({$reference}) for all inquiries.\n\n"
+          . "4. Please retain your reference number ({$reference}) for all future inquiries.\n\n"
           . "If you did not submit this message, you may safely disregard this email.\n\n"
           . "Sincerely,\n"
           . "{$ministry}\n";
@@ -87,7 +90,7 @@ function send_confirmation_email(
           . '<head>'
           . '<meta charset="UTF-8">'
           . '<meta name="viewport" content="width=device-width, initial-scale=1.0">'
-          . '<title>' . $e("Feedback Confirmation - {$reference}") . '</title>'
+          . '<title>' . $e("Successfully Received: Feedback Confirmation - {$reference}") . '</title>'
           . '</head>'
           . '<body style="margin:0;padding:24px 12px;background-color:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,Helvetica,Arial,sans-serif;color:#1e293b;line-height:1.6;">'
           . '<div style="max-width:620px;margin:0 auto;background-color:#ffffff;border-radius:10px;border:1px solid #cbd5e1;overflow:hidden;box-shadow:0 4px 6px -1px rgba(0,0,0,0.05);">'
@@ -96,25 +99,27 @@ function send_confirmation_email(
           . '<div style="background:linear-gradient(135deg,#09355c 0%,#0f4c81 100%);padding:26px 28px;color:#ffffff;text-align:left;">'
           . '<div style="font-size:26px;margin-bottom:6px;">⚓</div>'
           . '<h1 style="margin:0;font-size:20px;font-weight:700;letter-spacing:0.3px;color:#ffffff;">' . $e($ministry) . '</h1>'
-          . '<p style="margin:4px 0 0 0;font-size:13px;color:#93c5fd;letter-spacing:0.5px;text-transform:uppercase;">Official Feedback & Grievance Acknowledgment</p>'
+          . '<p style="margin:4px 0 0 0;font-size:13px;color:#93c5fd;letter-spacing:0.5px;text-transform:uppercase;">Official Feedback & Grievance Portal</p>'
           . '</div>'
 
           . '<div style="padding:28px 28px 32px 28px;">'
 
           // Greeting
           . '<p style="margin:0 0 16px 0;font-size:16px;color:#0f172a;font-weight:600;">' . $e($greeting) . '</p>'
-          . '<p style="margin:0 0 20px 0;font-size:15px;color:#334155;">Thank you for writing to the Minister of Fisheries. Your submission has been officially received and logged into our system.</p>'
+          . '<p style="margin:0 0 20px 0;font-size:15px;color:#334155;">Thank you for writing to the Minister of Fisheries. We confirm that <strong>your message has been successfully received</strong> and logged into our official records.</p>'
 
-          // Status Banner (In Progress)
-          . '<div style="background-color:#eff6ff;border:1px solid #bfdbfe;border-left:5px solid #2563eb;padding:16px 18px;border-radius:6px;margin:20px 0 24px 0;">'
-          . '<div style="margin-bottom:8px;">'
-          . '<span style="display:inline-block;background-color:#2563eb;color:#ffffff;font-size:12px;font-weight:700;letter-spacing:0.6px;padding:3px 10px;border-radius:20px;text-transform:uppercase;">'
-          . '● ' . $e($statusText)
+          // Success Notification & Status Banner
+          . '<div style="background-color:#f0fdf4;border:1px solid #bbf7d0;border-left:5px solid #16a34a;padding:16px 18px;border-radius:6px;margin:20px 0 24px 0;">'
+          . '<div style="display:flex;align-items:center;margin-bottom:8px;">'
+          . '<span style="display:inline-block;background-color:#16a34a;color:#ffffff;font-size:12px;font-weight:700;letter-spacing:0.6px;padding:3px 10px;border-radius:20px;text-transform:uppercase;">'
+          . '✓ Successfully Received'
           . '</span>'
-          . '<span style="font-size:13px;color:#1e40af;margin-left:8px;font-weight:600;">Under Ministry Review</span>'
+          . '<span style="display:inline-block;background-color:#eff6ff;color:#1e40af;border:1px solid #bfdbfe;font-size:12px;font-weight:700;letter-spacing:0.6px;padding:2px 8px;border-radius:20px;text-transform:uppercase;margin-left:8px;">'
+          . 'Status: ' . $e($statusText)
+          . '</span>'
           . '</div>'
-          . '<p style="margin:0;color:#1e3a8a;font-size:14px;line-height:1.5;">'
-          . 'Your case is currently <strong>' . $e($statusText) . '</strong>. A designated officer from the Ministry team is reviewing the details of your message.'
+          . '<p style="margin:0;color:#14532d;font-size:14px;line-height:1.5;">'
+          . 'Your feedback has been verified and registered under reference <strong>' . $e($reference) . '</strong>. A designated officer from the Ministry team is currently reviewing your message.'
           . '</p>'
           . '</div>'
 
@@ -123,17 +128,24 @@ function send_confirmation_email(
           . '<h2 style="margin:0 0 12px 0;font-size:13px;color:#64748b;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;">Submission Summary</h2>'
           . '<table style="width:100%;border-collapse:collapse;background-color:#f8fafc;border-radius:6px;overflow:hidden;border:1px solid #e2e8f0;">'
           . '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;width:38%;">Reference Number</td><td style="padding:10px 14px;font-size:15px;color:#0f4c81;font-weight:700;font-family:Consolas,monospace;">' . $e($reference) . '</td></tr>'
-          . '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;">Current Status</td><td style="padding:10px 14px;font-size:14px;font-weight:700;color:#2563eb;">' . $e($statusText) . '</td></tr>'
+          . '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;">Submission Status</td><td style="padding:10px 14px;font-size:14px;font-weight:700;color:#16a34a;">Successfully Received</td></tr>'
+          . '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;">Case Status</td><td style="padding:10px 14px;font-size:14px;font-weight:700;color:#2563eb;">' . $e($statusText) . ' (Under Review)</td></tr>'
           . '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;">Topic</td><td style="padding:10px 14px;font-size:14px;color:#0f172a;font-weight:500;">' . $e($topicLabel) . '</td></tr>'
-          . '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;">Date Submitted</td><td style="padding:10px 14px;font-size:14px;color:#334155;">' . $e($submittedDate) . '</td></tr>'
-          . '<tr><td style="padding:10px 14px;color:#64748b;font-size:14px;">Contact Phone</td><td style="padding:10px 14px;font-size:14px;color:#0f172a;font-weight:600;">' . $e($cleanPhone) . '</td></tr>'
+          . '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;">Date & Time</td><td style="padding:10px 14px;font-size:14px;color:#334155;">' . $e($submittedDate) . '</td></tr>';
+
+    if ($toName !== null && trim($toName) !== '') {
+        $html .= '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;">Sender Name</td><td style="padding:10px 14px;font-size:14px;color:#0f172a;font-weight:600;">' . $e($toName) . '</td></tr>';
+    }
+
+    $html .= '<tr style="border-bottom:1px solid #e2e8f0;"><td style="padding:10px 14px;color:#64748b;font-size:14px;">Contact Phone</td><td style="padding:10px 14px;font-size:14px;color:#0f172a;font-weight:600;">' . $e($cleanPhone) . '</td></tr>'
+          . '<tr><td style="padding:10px 14px;color:#64748b;font-size:14px;">Confirmation Sent To</td><td style="padding:10px 14px;font-size:14px;color:#0f172a;">' . $e($toEmail) . '</td></tr>'
           . '</table>'
           . '</div>'
 
           // Summary of Sender's Message Box
           . '<div style="margin:26px 0;">'
           . '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">'
-          . '<h2 style="margin:0;font-size:13px;color:#64748b;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;">Summary of Your Message</h2>'
+          . '<h2 style="margin:0;font-size:13px;color:#64748b;letter-spacing:0.6px;text-transform:uppercase;font-weight:700;">Summary of Submitted Content</h2>'
           . '<span style="font-size:12px;color:#94a3b8;">' . $wordCount . ' words</span>'
           . '</div>'
           . '<div style="background-color:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #0f4c81;padding:16px 18px;border-radius:6px;color:#1e293b;font-size:14px;line-height:1.6;word-break:break-word;">'
@@ -145,8 +157,8 @@ function send_confirmation_email(
           . '<div style="margin:26px 0;background-color:#ffffff;border:1px solid #e2e8f0;border-radius:6px;padding:16px 18px;">'
           . '<h3 style="margin:0 0 10px 0;font-size:14px;color:#0f172a;font-weight:700;">What happens next?</h3>'
           . '<ul style="margin:0;padding-left:20px;color:#475569;font-size:14px;line-height:1.6;">'
-          . '<li style="margin-bottom:6px;">Your submission is <strong>In Progress</strong> and undergoing review by the Ministry.</li>'
-          . '<li style="margin-bottom:6px;">A representative from the Ministry will contact you via phone (<strong>' . $e($cleanPhone) . '</strong>) if additional information or follow-up is required.</li>'
+          . '<li style="margin-bottom:6px;">Your submission was <strong>successfully received</strong> and recorded with reference number <strong>' . $e($reference) . '</strong>.</li>'
+          . '<li style="margin-bottom:6px;">A representative from the Ministry will review the content and contact you via phone (<strong>' . $e($cleanPhone) . '</strong>) if additional information is required.</li>'
           . '<li>Please quote your reference number <strong>' . $e($reference) . '</strong> in any future correspondence with the Ministry.</li>'
           . '</ul>'
           . '</div>'
@@ -182,18 +194,30 @@ function send_confirmation_email(
     $m->CharSet = 'UTF-8';
     $m->isSMTP();
     $m->Host    = (string) cfg('mail.host');
-    $m->Port    = (int) cfg('mail.port', 25);
-    $m->Timeout = (int) cfg('mail.timeout', 8);
+    $port = (int) cfg('mail.port', 25);
+    $m->Port = $port;
+    $m->Timeout = (int) cfg('mail.timeout', 10);
 
-    $secure = (string) cfg('mail.secure', '');
-    if ($secure === 'tls') {
+    $secure = strtolower(trim((string) cfg('mail.secure', '')));
+    if ($secure === 'tls' || ($secure === '' && $port === 587)) {
         $m->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    } elseif ($secure === 'ssl') {
+        $m->SMTPAutoTLS = true;
+    } elseif ($secure === 'ssl' || ($secure === '' && $port === 465)) {
         $m->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $m->SMTPAutoTLS = true;
     } else {
         $m->SMTPSecure  = '';
         $m->SMTPAutoTLS = false;
     }
+
+    // Relax SSL verification for local self-signed dev relays if needed
+    $m->SMTPOptions = [
+        'ssl' => [
+            'verify_peer'       => false,
+            'verify_peer_name'  => false,
+            'allow_self_signed' => true,
+        ],
+    ];
 
     $user = (string) cfg('mail.username', '');
     if ($user !== '') {
@@ -202,7 +226,13 @@ function send_confirmation_email(
         $m->Password = (string) cfg('mail.password', '');
     }
 
-    $m->setFrom((string) cfg('mail.from_email'), (string) cfg('mail.from_name', ''));
+    $fromEmail = (string) cfg('mail.from_email');
+    if ($fromEmail === '' && $user !== '' && filter_var($user, FILTER_VALIDATE_EMAIL)) {
+        $fromEmail = $user;
+    }
+    $fromName = (string) cfg('mail.from_name', 'Ministry of Fisheries');
+    $m->setFrom($fromEmail !== '' ? $fromEmail : 'no-reply@fisheries.gov.lk', $fromName);
+
     $replyTo = (string) cfg('mail.reply_to', '');
     if ($replyTo !== '') {
         $m->addReplyTo($replyTo);
@@ -210,7 +240,7 @@ function send_confirmation_email(
     $m->addAddress($toEmail, $toName ?? '');
 
     $m->isHTML(true);
-    $m->Subject = "Confirmation: Your message is In Progress – {$reference}";
+    $m->Subject = "Successfully Received: Feedback Confirmation – {$reference}";
     $m->Body    = $html;
     $m->AltBody = $text;
     $m->send();

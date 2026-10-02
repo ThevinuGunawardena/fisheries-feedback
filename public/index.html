@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,23 +38,21 @@
 
           <div class="form-group">
             <label for="name">Name <span class="optional">(optional)</span></label>
-            <input type="text" id="name" name="name" maxlength="100" autocomplete="name"
-                   placeholder="Your name" />
+            <input type="text" id="name" name="name" maxlength="100" autocomplete="name" placeholder="Your name" />
             <p class="field-error" id="nameError" aria-live="polite"></p>
           </div>
 
           <div class="form-group">
             <label for="email">Email address <span class="optional">(optional)</span></label>
             <input type="email" id="email" name="email" maxlength="254" autocomplete="email"
-                   placeholder="example@email.com" aria-describedby="emailError" />
+              placeholder="example@email.com" aria-describedby="emailError" />
             <p class="field-error" id="emailError" aria-live="polite"></p>
           </div>
 
           <div class="form-group">
             <label for="phone">Phone number <span class="required" aria-hidden="true">*</span></label>
-            <input type="tel" id="phone" name="phone" maxlength="25" autocomplete="tel"
-                   inputmode="tel" required placeholder="Example: 077 123 4567"
-                   aria-describedby="phoneError" />
+            <input type="tel" id="phone" name="phone" maxlength="25" autocomplete="tel" inputmode="tel" required
+              placeholder="Example: 077 123 4567" aria-describedby="phoneError" />
             <p class="field-error" id="phoneError" aria-live="polite"></p>
           </div>
 
@@ -71,8 +70,8 @@
               <span id="wordCount" class="character-count" aria-live="off">0 / 2,000 words</span>
             </div>
             <textarea id="message" name="message" rows="8" required maxlength="30000"
-                      placeholder="Write your message to the Minister here."
-                      aria-describedby="messageHelp messageError"></textarea>
+              placeholder="Write your message to the Minister here."
+              aria-describedby="messageHelp messageError"></textarea>
             <p class="field-help" id="messageHelp">
               Maximum 2,000 words. Please do not include passwords or bank details.
             </p>
@@ -113,4 +112,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>

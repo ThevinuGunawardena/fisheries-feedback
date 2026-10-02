@@ -66,12 +66,25 @@ MySQL 5.7+/8 or MariaDB 10.3+.
 
 | Situation | Settings |
 |---|---|
+| **Custom / Ministry SMTP** | `host` (e.g. `mail.fisheries.gov.lk`), `port 587`, `secure 'tls'`, plus `username`/`password`. |
+| **Gmail SMTP** | `host 'smtp.gmail.com'`, `port 587`, `secure 'tls'`, your Gmail address as `username` and `from_email`, and a 16-character [Google App Password](https://myaccount.google.com/apppasswords) as `password`. |
 | **Testing on your PC** | Install [Mailpit](https://github.com/axllent/mailpit) and leave defaults (`host 127.0.0.1`, `port 1025`, no login). Open `http://localhost:8025` to see the emails. |
-| **Ministry mail server** | `host`, `port 587`, `secure 'tls'`, plus `username`/`password`. Ask your mail admin for a relay account and set `from_email` to an address on your domain. |
 | **Turn email off** | `'enabled' => false` |
 
-For real inboxes, ask your mail admin to publish SPF/DKIM for the sending domain,
-otherwise confirmations will land in spam.
+#### Testing & Resending Emails
+
+You can test your SMTP configuration and resend confirmation emails from the command line:
+
+```bash
+# Test sending an email to verify SMTP credentials
+php app/resend.php --test you@example.com
+
+# Resend confirmation email for the latest submission
+php app/resend.php
+
+# Resend confirmation email for a specific reference number
+php app/resend.php FISH-20261002-XLYZBW
+```
 
 ### Production checklist
 
