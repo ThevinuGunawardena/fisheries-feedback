@@ -32,6 +32,7 @@
   // ---------------------------------------------------------------- helpers
   const countWords = (text) => (text.trim().match(/\S+/gu) || []).length;
   const fmt = (n) => n.toLocaleString("en-US");
+  const escapeHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
 
   function setError(key, message) {
     fields[key].classList.add("input-error");
@@ -146,8 +147,12 @@
     const note = $("successEmailNote");
     if (result.email === "sent") {
       note.textContent = `A confirmation email has been sent to ${email}.`;
-    } else if (result.email === "failed" || result.email === "skipped") {
-      note.textContent = "We could not send a confirmation email, but your message was received.";
+    } else if (result.email === "failed") {
+      note.textContent = result.email_error
+        ? `We could not send a confirmation email (${result.email_error}), but your message was received.`
+        : "We could not send a confirmation email, but your message was received.";
+    } else if (result.email === "skipped") {
+      note.textContent = "Confirmation emails are currently disabled, but your message was received.";
     } else {
       note.textContent = "";
     }

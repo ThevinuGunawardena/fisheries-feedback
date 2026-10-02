@@ -45,31 +45,23 @@ return [
     'mail' => [
         'enabled'    => true,
 
-        // --- SMTP Provider Options ---
-        // Option 1: Gmail SMTP (to deliver to real inboxes like eadpps17@gmail.com)
-        //   'host'       => 'smtp.gmail.com',
-        //   'port'       => 587,
-        //   'secure'     => 'tls',
-        //   'username'   => 'your-email@gmail.com',
-        //   'password'   => 'your-16-character-google-app-password',
-        //   'from_email' => 'your-email@gmail.com',
-        //
-        // Option 2: Local mail catcher (Mailpit / MailHog) for local development
-        //   'host'       => '127.0.0.1',
-        //   'port'       => 1025,
-        //   'secure'     => '',
-        //   'username'   => '',
-        //   'password'   => '',
-        //   'from_email' => 'no-reply@fisheries.gov.lk',
+        // 'driver':
+        //   - 'dummy' (default): Perfect for development & testing! No real email/password needed.
+        //     Emails are simulated, marked as sent, and saved to app/storage/ for instant browser preview.
+        //   - 'smtp': Uses a real SMTP relay or local mail catcher (Mailpit on 127.0.0.1:1025).
+        'driver'     => 'dummy',
 
-        'host'       => '127.0.0.1',
-        'port'       => 1025,
-        'secure'     => '',            // '' = none, 'tls' = STARTTLS (port 587), 'ssl' = SMTPS (port 465)
-        'username'   => '',
-        'password'   => '',
+        // Dummy sender email and display name:
         'from_email' => 'no-reply@fisheries.gov.lk',
         'from_name'  => 'Ministry of Fisheries',
-        'reply_to'   => '',
+        'reply_to'   => 'feedback@fisheries.gov.lk',
+
+        // SMTP settings (only used when 'driver' is set to 'smtp')
+        'host'       => 'smtp.gmail.com',
+        'port'       => 587,
+        'secure'     => 'tls',
+        'username'   => '',
+        'password'   => '',
         'timeout'    => 10,
     ],
 

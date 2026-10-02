@@ -23,9 +23,10 @@ $pdo = db();
 $target = $argv[1] ?? 'latest';
 
 if ($target === '--test') {
-    $to = $argv[2] ?? '';
+    $defaultTo = (string) cfg('mail.from_email', 'eadpps17@gmail.com');
+    $to = $argv[2] ?? ($defaultTo !== '' ? $defaultTo : 'eadpps17@gmail.com');
     if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
-        echo "Usage: php app/resend.php --test you@example.com\n";
+        echo "Usage: php app/resend.php --test [recipient@example.com]\n";
         exit(1);
     }
     echo "Sending test email to {$to} using configured SMTP settings...\n";

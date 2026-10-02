@@ -1,4 +1,4 @@
-Dear mesanda,
+Dear Test Recipient,
 
 This email confirms that your submission has been SUCCESSFULLY RECEIVED by the Ministry of Fisheries.
 Your request has been officially recorded and its current status is: In Progress.
@@ -6,18 +6,20 @@ Your request has been officially recorded and its current status is: In Progress
 =========================================================
              SUBMISSION CONTENT SUMMARY
 =========================================================
-Reference Number : FISH-20261002-P6LWX5
+Reference Number : FISH-TEST-20261002-172007
 Receipt Status   : Successfully Received
 Current Status   : In Progress (Under Ministry Review)
-Date Submitted   : October 2, 2026, 5:39 PM (+0530)
-Topic            : Fuel prices or fuel access
-Contact Phone    : 0772102573
-Contact Name     : mesanda
-Recipient Email  : mesandasethumika@gmail.com
+Date Submitted   : October 2, 2026, 5:20 PM (+0530)
+Topic            : General Feedback
+Contact Phone    : +94 77 123 4567
+Contact Name     : Test Recipient
+Recipient Email  : eadpps17@gmail.com
 ---------------------------------------------------------
-SUMMARY OF YOUR SUBMITTED MESSAGE (1 words):
+SUMMARY OF YOUR SUBMITTED MESSAGE (23 words):
 ---------------------------------------------------------
-bdjwrrjkhdfhleh
+This is a test email sent to verify that the Ministry of Fisheries Feedback Portal email configuration is working correctly.
+
+All systems operational.
 
 =========================================================
 WHAT HAPPENS NEXT?
@@ -25,8 +27,8 @@ WHAT HAPPENS NEXT?
 1. Your message has been successfully received and logged into our database.
 2. Your case is currently marked as "In Progress" for official assessment.
 3. A Ministry officer is reviewing your submission and will contact
-   you on 0772102573 if further details are needed.
-4. Please retain your reference number (FISH-20261002-P6LWX5) for all future inquiries.
+   you on +94 77 123 4567 if further details are needed.
+4. Please retain your reference number (FISH-TEST-20261002-172007) for all future inquiries.
 
 If you did not submit this message, you may safely disregard this email.
 

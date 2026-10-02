@@ -114,12 +114,15 @@ $userAgent = mb_substr(clean_line($_SERVER['HTTP_USER_AGENT'] ?? ''), 0, 255);
 try {
     $pdo = db();
 
-    $st = $pdo->prepare(
-        'SELECT COUNT(*) FROM feedback_submissions WHERE ip_hash = ? AND created_at > (NOW() - INTERVAL 1 HOUR)'
-    );
-    $st->execute([$ipHash]);
-    if ((int) $st->fetchColumn() >= (int) cfg('limits.per_ip_per_hour', 5)) {
-        json_out(['ok' => false, 'error' => 'Too many messages from your connection. Please try again later.'], 429);
+    $maxPerHour = (int) cfg('limits.per_ip_per_hour', 0);
+    if ($maxPerHour > 0) {
+        $st = $pdo->prepare(
+            'SELECT COUNT(*) FROM feedback_submissions WHERE ip_hash = ? AND created_at > (NOW() - INTERVAL 1 HOUR)'
+        );
+        $st->execute([$ipHash]);
+        if ((int) $st->fetchColumn() >= $maxPerHour) {
+            json_out(['ok' => false, 'error' => 'Too many messages from your connection. Please try again later.'], 429);
+        }
     }
 
     // ------------------------------------------------------------- store it
@@ -182,12 +185,16 @@ if ($email !== '') {
     $emailError  = null;
 
     try {
-        $st = $pdo->prepare(
-            "SELECT COUNT(*) FROM feedback_submissions
-              WHERE email = ? AND email_status = 'sent' AND created_at > (NOW() - INTERVAL 1 DAY)"
-        );
-        $st->execute([$email]);
-        $overLimit = (int) $st->fetchColumn() >= (int) cfg('limits.per_email_per_day', 3);
+        $maxPerEmailDay = (int) cfg('limits.per_email_per_day', 0);
+        $overLimit = false;
+        if ($maxPerEmailDay > 0) {
+            $st = $pdo->prepare(
+                "SELECT COUNT(*) FROM feedback_submissions
+                  WHERE email = ? AND email_status = 'sent' AND created_at > (NOW() - INTERVAL 1 DAY)"
+            );
+            $st->execute([$email]);
+            $overLimit = (int) $st->fetchColumn() >= $maxPerEmailDay;
+        }
 
         if (cfg('mail.enabled', true) && !$overLimit) {
             try {
@@ -216,12 +223,17 @@ if ($email !== '') {
     $emailResult = $emailStatus;
 }
 
-json_out([
+$resp = [
     'ok'        => true,
     'reference' => $reference,
     'status'    => 'in_progress',
     'email'     => $emailResult,
-], 201);
+];
+if ($emailResult === 'failed' && !empty($emailError)) {
+    $resp['email_error'] = $emailError;
+}
+
+json_out($resp, 201);
 
 // ------------------------------------------------------------------ helpers
 /** e.g. FISH-20260929-K7M2QX – no 0/O/1/I so it is easy to read out over the phone. */

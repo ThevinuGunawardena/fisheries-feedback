@@ -66,9 +66,10 @@ MySQL 5.7+/8 or MariaDB 10.3+.
 
 | Situation | Settings |
 |---|---|
-| **Custom / Ministry SMTP** | `host` (e.g. `mail.fisheries.gov.lk`), `port 587`, `secure 'tls'`, plus `username`/`password`. |
-| **Gmail SMTP** | `host 'smtp.gmail.com'`, `port 587`, `secure 'tls'`, your Gmail address as `username` and `from_email`, and a 16-character [Google App Password](https://myaccount.google.com/apppasswords) as `password`. |
-| **Testing on your PC** | Install [Mailpit](https://github.com/axllent/mailpit) and leave defaults (`host 127.0.0.1`, `port 1025`, no login). Open `http://localhost:8025` to see the emails. |
+| **Dummy Email (Default)** | `'driver' => 'dummy'` — Safe local simulator! No real email or password needed. All confirmation emails are simulated, saved, and viewable at `http://localhost:8000/preview-email.php`. |
+| **Custom / Ministry SMTP** | `driver => 'smtp'`, `host` (e.g. `mail.fisheries.gov.lk`), `port 587`, `secure 'tls'`, plus `username`/`password`. |
+| **Gmail SMTP** | `driver => 'smtp'`, `host 'smtp.gmail.com'`, `port 587`, `secure 'tls'`, your Gmail address as `username` and `from_email`, and a 16-character [Google App Password](https://myaccount.google.com/apppasswords) as `password`. |
+| **Testing with Mailpit** | `driver => 'smtp'`, `host 127.0.0.1`, `port 1025`, no login. Open `http://localhost:8025` to see emails. |
 | **Turn email off** | `'enabled' => false` |
 
 #### Testing & Resending Emails

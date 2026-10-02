@@ -180,13 +180,29 @@ function send_confirmation_email(
     // ---------------------------------------------------------------- Store preview locally for dev/inspection
     try {
         $storageDir = __DIR__ . '/storage';
-        if (!is_dir($storageDir)) {
-            @mkdir($storageDir, 0755, true);
+        $emailsDir  = $storageDir . '/emails';
+        if (!is_dir($emailsDir)) {
+            @mkdir($emailsDir, 0755, true);
         }
         file_put_contents($storageDir . '/last_email_preview.html', $html);
         file_put_contents($storageDir . '/last_email_preview.txt', $text);
+
+        $safeRef = preg_replace('/[^A-Za-z0-9_-]/', '', $reference);
+        if ($safeRef !== '') {
+            file_put_contents($emailsDir . '/' . $safeRef . '.html', $html);
+            file_put_contents($emailsDir . '/' . $safeRef . '.txt', $text);
+        }
     } catch (Throwable $_) {
         // Non-critical local preview cache
+    }
+
+    $driver = strtolower(trim((string) cfg('mail.driver', 'smtp')));
+    $host   = strtolower(trim((string) cfg('mail.host', '')));
+
+    // If dummy driver or host is set, simulate successful delivery immediately
+    if ($driver === 'dummy' || $driver === 'log' || $host === 'dummy' || $host === 'log') {
+        error_log("feedback-widget: [DUMMY MAIL] Successfully simulated sending confirmation email for {$reference} to {$toEmail}.");
+        return;
     }
 
     // ---------------------------------------------------------------- Send via PHPMailer

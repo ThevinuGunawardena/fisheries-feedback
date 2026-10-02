@@ -1,0 +1,38 @@
+Dear Test 4,
+
+This email confirms that your submission has been SUCCESSFULLY RECEIVED by the Ministry of Fisheries.
+Your request has been officially recorded and its current status is: In Progress.
+
+=========================================================
+             SUBMISSION CONTENT SUMMARY
+=========================================================
+Reference Number : FISH-20261002-8KSRQ5
+Receipt Status   : Successfully Received
+Current Status   : In Progress (Under Ministry Review)
+Date Submitted   : October 2, 2026, 5:36 PM (+0530)
+Topic            : Boats, nets, engines or ice
+Contact Phone    : 075 2073311
+Contact Name     : Test 4
+Recipient Email  : eadpps17@gmail.com
+---------------------------------------------------------
+SUMMARY OF YOUR SUBMITTED MESSAGE (118 words):
+---------------------------------------------------------
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim.
+Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede.
+Mauris et orci. Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.
+Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy. Fusce aliquet pede non pede.
+Suspendisse dapibus lorem pellentesque magna. Integer nulla. Donec blandit feugiat ligula. Donec hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien.
+
+=========================================================
+WHAT HAPPENS NEXT?
+=========================================================
+1. Your message has been successfully received and logged into our database.
+2. Your case is currently marked as "In Progress" for official assessment.
+3. A Ministry officer is reviewing your submission and will contact
+   you on 075 2073311 if further details are needed.
+4. Please retain your reference number (FISH-20261002-8KSRQ5) for all future inquiries.
+
+If you did not submit this message, you may safely disregard this email.
+
+Sincerely,
+Ministry of Fisheries
