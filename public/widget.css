@@ -1,0 +1,819 @@
+/**
+ * Ministry / Official Website Feedback Floating Widget Styles
+ * Scoped under #mfw-widget-root and .mfw-* classes to prevent host site CSS collisions.
+ */
+
+#mfw-widget-root {
+  --mfw-navy: #07172e;
+  --mfw-navy-dark: #040d1a;
+  --mfw-navy-light: #0d2850;
+  --mfw-blue: #1b6da0;
+  --mfw-blue-glow: rgba(56, 189, 248, 0.5);
+  --mfw-blue-border: #2957a6;
+  --mfw-gold: #e5b338;
+  --mfw-gold-border: rgba(229, 179, 56, 0.7);
+  --mfw-text: #1d2a33;
+  --mfw-text-muted: #5e6e79;
+  --mfw-bg: #f8fafc;
+  --mfw-white: #ffffff;
+  --mfw-border: #cbd5e1;
+  --mfw-border-focus: #1b6da0;
+  --mfw-danger: #dc2626;
+  --mfw-danger-bg: #fef2f2;
+  --mfw-success: #15803d;
+  --mfw-success-bg: #ecfdf5;
+  --mfw-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans Sinhala", "Noto Sans Tamil", Arial, sans-serif;
+  font-family: var(--mfw-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#mfw-widget-root *,
+#mfw-widget-root *::before,
+#mfw-widget-root *::after {
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   1. Floating Action Button / Launcher (Modeled after Talk to VC button)
+   ========================================================================== */
+
+.mfw-launcher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483640;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 20px 6px 7px;
+  height: 54px;
+  background: linear-gradient(135deg, #07172e 0%, #0d2850 50%, #07162d 100%);
+  border: 2px solid var(--mfw-blue-border);
+  border-radius: 9999px;
+  color: #ffffff;
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+  box-shadow:
+    0 10px 25px -4px rgba(4, 13, 26, 0.65),
+    0 0 16px rgba(37, 99, 235, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  transition:
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease;
+  outline: none;
+}
+
+.mfw-launcher:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: #38bdf8;
+  box-shadow:
+    0 16px 34px -4px rgba(4, 13, 26, 0.8),
+    0 0 24px rgba(56, 189, 248, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.mfw-launcher:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.mfw-launcher:focus-visible {
+  outline: 3px solid #38bdf8;
+  outline-offset: 3px;
+}
+
+/* Position options */
+.mfw-pos-left .mfw-launcher {
+  right: auto;
+  left: 24px;
+}
+
+/* Crest Emblem in the button */
+.mfw-crest-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #18335f, #08152b);
+  border: 1.5px solid var(--mfw-gold-border);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 2px 6px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.mfw-crest-circle svg,
+.mfw-crest-circle img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Stacked text column */
+.mfw-text-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 1;
+}
+
+.mfw-label-top {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.mfw-label-bottom {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.mfw-label-prefix {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #93c5fd;
+  letter-spacing: 0.08em;
+}
+
+.mfw-label-target {
+  font-size: 16px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+/* Launcher status / unread dot */
+.mfw-status-dot {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  background: #22c55e;
+  border: 2px solid #07172e;
+  border-radius: 50%;
+  animation: mfw-pulse-dot 2.5s infinite;
+}
+
+@keyframes mfw-pulse-dot {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 5px rgba(34, 197, 94, 0);
+  }
+}
+
+/* ==========================================================================
+   2. Backdrop Overlay
+   ========================================================================== */
+
+.mfw-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 13, 26, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 2147483641;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s ease, visibility 0.28s;
+}
+
+.mfw-open .mfw-backdrop {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==========================================================================
+   3. Modal Card / Popup Panel
+   ========================================================================== */
+
+.mfw-panel {
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  width: 480px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 100px);
+  background: var(--mfw-white);
+  border-radius: 22px;
+  border: 1px solid rgba(13, 40, 80, 0.15);
+  box-shadow:
+    0 24px 60px -12px rgba(4, 13, 26, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  z-index: 2147483642;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(16px) scale(0.96);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform-origin: bottom right;
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.28s;
+}
+
+.mfw-pos-left .mfw-panel {
+  right: auto;
+  left: 24px;
+  transform-origin: bottom left;
+}
+
+.mfw-open .mfw-panel {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+/* ==========================================================================
+   4. Panel Header
+   ========================================================================== */
+
+.mfw-header {
+  background: linear-gradient(135deg, #07172e 0%, #0d2850 100%);
+  color: #ffffff;
+  padding: 18px 22px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  position: relative;
+  border-bottom: 2px solid rgba(56, 189, 248, 0.2);
+  flex-shrink: 0;
+}
+
+.mfw-header-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1;
+}
+
+.mfw-header-crest {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #1c3c6f, #07162d);
+  border: 1.5px solid var(--mfw-gold);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mfw-header-crest svg,
+.mfw-header-crest img {
+  width: 28px;
+  height: 28px;
+}
+
+.mfw-header-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.mfw-header-eyebrow {
+  margin: 0 0 3px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #93c5fd;
+}
+
+.mfw-header-title {
+  margin: 0;
+  font-size: 1.12rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.mfw-header-desc {
+  margin: 3px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: #cbd5e1;
+}
+
+.mfw-close-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.mfw-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: rotate(90deg);
+}
+
+.mfw-close-btn:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   5. Panel Body & Form
+   ========================================================================== */
+
+.mfw-body {
+  padding: 18px 22px 24px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--mfw-bg);
+}
+
+.mfw-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mfw-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mfw-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.mfw-body::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+  flex: 1;
+}
+
+/* Privacy info alert */
+.mfw-privacy-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #f0f7fb;
+  border-left: 3px solid var(--mfw-blue);
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--mfw-text);
+}
+
+.mfw-privacy-icon {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.mfw-privacy-note p {
+  margin: 0;
+}
+
+/* Form Layout */
+.mfw-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.mfw-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.mfw-full-width {
+  grid-column: 1 / -1;
+}
+
+.mfw-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.mfw-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--mfw-navy);
+  margin-bottom: 6px;
+}
+
+.mfw-label-row .mfw-label {
+  margin-bottom: 0;
+}
+
+.mfw-optional {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--mfw-text-muted);
+}
+
+.mfw-required {
+  color: var(--mfw-danger);
+  font-weight: 700;
+}
+
+.mfw-word-count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mfw-text-muted);
+}
+
+.mfw-word-count.mfw-near-limit {
+  color: #b45309;
+}
+
+.mfw-word-count.mfw-over-limit {
+  color: var(--mfw-danger);
+  font-weight: 700;
+}
+
+/* Input Fields */
+.mfw-input,
+.mfw-select,
+.mfw-textarea {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  color: var(--mfw-text);
+  background: var(--mfw-white);
+  border: 1px solid var(--mfw-border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.mfw-textarea {
+  resize: vertical;
+  min-height: 88px;
+  line-height: 1.45;
+}
+
+.mfw-input:hover,
+.mfw-select:hover,
+.mfw-textarea:hover {
+  border-color: #94a3b8;
+}
+
+.mfw-input:focus,
+.mfw-select:focus,
+.mfw-textarea:focus {
+  border-color: var(--mfw-border-focus);
+  box-shadow: 0 0 0 3px rgba(27, 109, 160, 0.15);
+}
+
+.mfw-input.mfw-has-error,
+.mfw-select.mfw-has-error,
+.mfw-textarea.mfw-has-error {
+  border-color: var(--mfw-danger);
+  background: #fffafa;
+}
+
+.mfw-input.mfw-has-error:focus,
+.mfw-select.mfw-has-error:focus,
+.mfw-textarea.mfw-has-error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.mfw-field-error {
+  margin: 4px 0 0;
+  font-size: 0.72rem;
+  color: var(--mfw-danger);
+  line-height: 1.3;
+  min-height: 0;
+}
+
+.mfw-field-help {
+  margin: 4px 0 0;
+  font-size: 0.72rem;
+  color: var(--mfw-text-muted);
+  line-height: 1.35;
+}
+
+/* Honeypot field (hidden from view) */
+.mfw-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
+/* Error banner */
+.mfw-banner-error {
+  padding: 10px 14px;
+  background: var(--mfw-danger-bg);
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  color: var(--mfw-danger);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin: 12px 0 0;
+}
+
+/* Submit button */
+.mfw-submit-btn {
+  margin-top: 16px;
+  width: 100%;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #07172e 0%, #0d2850 100%);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(7, 23, 46, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mfw-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #0a1f3d 0%, #153a70 100%);
+  box-shadow: 0 8px 18px rgba(7, 23, 46, 0.35);
+}
+
+.mfw-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.mfw-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.mfw-footnote {
+  margin: 10px 0 0;
+  font-size: 0.7rem;
+  color: var(--mfw-text-muted);
+  text-align: center;
+}
+
+/* Loading spinner */
+.mfw-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: mfw-spin 0.75s linear infinite;
+  display: inline-block;
+}
+
+@keyframes mfw-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   6. Success State
+   ========================================================================== */
+
+.mfw-success-view {
+  padding: 24px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mfw-success-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #15803d;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  animation: mfw-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes mfw-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.mfw-success-title {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--mfw-navy);
+}
+
+.mfw-ref-card {
+  margin: 16px 0;
+  padding: 12px 18px;
+  background: #ffffff;
+  border: 1.5px dashed #94a3b8;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.mfw-ref-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mfw-text-muted);
+}
+
+.mfw-ref-number-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mfw-ref-code {
+  font-size: 1.15rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: #0d2850;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.mfw-copy-btn {
+  padding: 4px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: var(--mfw-navy);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mfw-copy-btn:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+.mfw-success-note {
+  margin: 4px 0 16px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--mfw-text-muted);
+  max-width: 360px;
+}
+
+.mfw-btn-group {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 360px;
+}
+
+.mfw-btn-outline {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--mfw-white);
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  color: var(--mfw-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mfw-btn-outline:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+}
+
+.mfw-btn-primary {
+  flex: 1;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #07172e 0%, #0d2850 100%);
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mfw-btn-primary:hover {
+  background: linear-gradient(135deg, #0a1f3d 0%, #153a70 100%);
+}
+
+/* ==========================================================================
+   7. Mobile Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 580px) {
+  .mfw-launcher {
+    bottom: 16px;
+    right: 16px;
+    height: 48px;
+    padding: 5px 16px 5px 6px;
+    gap: 9px;
+  }
+
+  .mfw-pos-left .mfw-launcher {
+    right: auto;
+    left: 16px;
+  }
+
+  .mfw-crest-circle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mfw-crest-circle svg,
+  .mfw-crest-circle img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .mfw-label-top {
+    font-size: 9.5px;
+  }
+
+  .mfw-label-bottom {
+    font-size: 13.5px;
+  }
+
+  .mfw-panel {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+    transform-origin: bottom center;
+  }
+
+  .mfw-pos-left .mfw-panel {
+    left: 0;
+    right: 0;
+    transform-origin: bottom center;
+  }
+
+  .mfw-open .mfw-panel {
+    transform: translateY(0);
+  }
+
+  .mfw-form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .mfw-body {
+    max-height: calc(92vh - 120px);
+    padding: 16px;
+  }
+}

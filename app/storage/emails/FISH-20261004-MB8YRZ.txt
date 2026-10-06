@@ -1,4 +1,4 @@
-Dear Test 113,
+Dear Test 07,
 
 This email confirms that your submission has been SUCCESSFULLY RECEIVED by the Ministry of Fisheries.
 Your request has been officially recorded and its current status is: In Progress.
@@ -6,13 +6,13 @@ Your request has been officially recorded and its current status is: In Progress
 =========================================================
              SUBMISSION CONTENT SUMMARY
 =========================================================
-Reference Number : FISH-20261006-F5ZHT8
+Reference Number : FISH-20261004-MB8YRZ
 Receipt Status   : Successfully Received
 Current Status   : In Progress (Under Ministry Review)
-Date Submitted   : October 6, 2026, 11:51 AM (+0530)
-Topic            : Fuel prices or fuel access
+Date Submitted   : October 4, 2026, 2:24 AM (+0530)
+Topic            : Other
 Contact Phone    : 075 2073311
-Contact Name     : Test 113
+Contact Name     : Test 07
 Recipient Email  : eadpps17@gmail.com
 ---------------------------------------------------------
 SUMMARY OF YOUR SUBMITTED MESSAGE (478 words):
@@ -35,7 +35,7 @@ WHAT HAPPENS NEXT?
 2. Your case is currently marked as "In Progress" for official assessment.
 3. A Ministry officer is reviewing your submission and will contact
    you on 075 2073311 if further details are needed.
-4. Please retain your reference number (FISH-20261006-F5ZHT8) for all future inquiries.
+4. Please retain your reference number (FISH-20261004-MB8YRZ) for all future inquiries.
 
 If you did not submit this message, you may safely disregard this email.
 

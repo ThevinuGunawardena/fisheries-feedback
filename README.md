@@ -98,17 +98,53 @@ php app/resend.php FISH-20261002-XLYZBW
 - Behind a reverse proxy/load balancer, `REMOTE_ADDR` will be the proxy's IP and the per-IP rate limit
   will treat everyone as one person. Trusted-proxy (`X-Forwarded-For`) handling is not included; add it in `submit.php` if you deploy behind a proxy.
 
-## Embedding on the ministry website
+## Embedding on your main website
 
-**Simplest – iframe:**
+You have two powerful options to add this to your main website:
+
+### Option 1: Floating Action Button Widget (Recommended – like the "TALK TO VC" / "TALK TO MINISTER" button)
+
+Add this **single script tag** before the closing `</body>` tag on any page of your main website:
+
+```html
+<!-- Floating Feedback Widget -->
+<script src="https://feedback.fisheries.gov.example/public/widget.js"
+        data-api-base="https://feedback.fisheries.gov.example/public/api/"
+        data-mode="minister">
+</script>
+```
+
+#### Customization Options (data-attributes)
+
+| Attribute | Default | Description |
+|---|---|---|
+| `data-mode` | `"minister"` | Preset style: `"minister"` (TALK TO MINISTER) or `"vc"` (TALK TO VC). |
+| `data-api-base` | Auto-detected | Full URL to the API folder ending with a slash (`.../api/`). |
+| `data-label-top` | `"TALK"` | Top text on the button. |
+| `data-label-prefix` | `"TO"` | Middle small text prefix. |
+| `data-label-target` | `"MINISTER"` | Main bold text on the button (e.g. `"VC"` or `"MINISTER"`). |
+| `data-crest` | `"fisheries"` | Crest emblem icon: `"fisheries"` or `"kdu"`. |
+| `data-crest-url` | `""` | Optional direct image URL for a custom institutional crest/logo. |
+| `data-position` | `"bottom-right"` | Screen dock position: `"bottom-right"` or `"bottom-left"`. |
+| `data-title` | `"Write to the Minister..."` | Title displayed at the top of the popup form. |
+
+#### Live Interactive Demo
+Open `http://localhost:8000/demo.html` in your browser to see a realistic main website with the floating button and toggle between **TALK TO MINISTER** and **TALK TO VC**.
+
+### Option 2: Inline iframe or Embedded Card
+
+**iframe:**
 ```html
 <iframe src="https://feedback.fisheries.gov.example/public/" title="Write to the Minister"
         style="width:100%;max-width:850px;height:1100px;border:0"></iframe>
 ```
-**Or** copy the `<section class="feedback-card">…</section>` block, `style.css` and `script.js` into an existing page.
-If that page is on a *different domain* than the API, then:
-1. in `script.js` set `API_BASE` to the full URL (`"https://feedback.fisheries.gov.example/api/"`), and
-2. in `config.php` add the page's origin to `allowed_origins`, e.g. `['https://www.fisheries.gov.example']`.
+
+**Card Embed:**
+Copy `<section class="feedback-card">…</section>`, `style.css`, and `script.js` into an existing page.
+
+> **Cross-Domain Setup:** If your main website is hosted on a different domain or port than this API server:
+> 1. Set `data-api-base` to the full URL (e.g. `"https://api.yourdomain.com/public/api/"`).
+> 2. In `app/config.php`, add your main website's origin to `allowed_origins`, e.g. `['https://www.yourdomain.com']`. Localhost origins (`localhost` / `127.0.0.1`) are permitted automatically.
 
 ## Staff: reading and following up on messages
 

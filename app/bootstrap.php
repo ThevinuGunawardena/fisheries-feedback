@@ -77,18 +77,22 @@ function handle_cors(): void
         $originAuthority = $originHost . ($originPort ? ':' . $originPort : '');
 
         $sameOrigin = ($originAuthority === $hostHeader);
-        $allowed    = in_array($origin, cfg('allowed_origins', []), true);
+        $allowedOrigins = cfg('allowed_origins', []);
+        $isLocalhost = ($originHost === 'localhost' || $originHost === '127.0.0.1');
+        $allowed = $sameOrigin
+            || $isLocalhost
+            || in_array('*', $allowedOrigins, true)
+            || in_array($origin, $allowedOrigins, true);
 
-        if (!$sameOrigin && !$allowed) {
+        if (!$allowed) {
             json_out(['ok' => false, 'error' => 'This website is not allowed to use the service.'], 403);
         }
-        if ($allowed) {
-            header('Access-Control-Allow-Origin: ' . $origin);
-            header('Vary: Origin');
-            header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-            header('Access-Control-Allow-Headers: Content-Type');
-            header('Access-Control-Max-Age: 600');
-        }
+
+        header('Access-Control-Allow-Origin: ' . $origin);
+        header('Vary: Origin');
+        header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Accept');
+        header('Access-Control-Max-Age: 600');
     }
     if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
         http_response_code(204);
