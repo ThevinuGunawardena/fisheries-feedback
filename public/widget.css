@@ -234,11 +234,11 @@
 
 /* Emblem circle in launcher */
 .mfw-crest-circle {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #ffffff;
-  border: 1.5px solid rgba(245, 158, 11, 0.6);
+  border: 1.5px solid rgba(245, 158, 11, 0.85);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
@@ -247,16 +247,20 @@
   overflow: hidden;
   position: relative;
   transition: transform 0.2s ease;
+  padding: 3px;
 }
 
 .mfw-launcher:hover .mfw-crest-circle {
-  transform: rotate(5deg) scale(1.04);
+  transform: rotate(4deg) scale(1.05);
 }
 
 .mfw-crest-circle svg,
-.mfw-crest-circle img {
-  width: 26px;
-  height: 26px;
+.mfw-crest-circle img,
+.mfw-emblem-img {
+  width: 100%;
+  height: 100%;
+  max-width: 32px;
+  max-height: 35px;
   object-fit: contain;
   display: block;
 }
@@ -419,24 +423,29 @@
 }
 
 .mfw-header-avatar {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: #ffffff;
-  border: 2px solid rgba(245, 158, 11, 0.7);
+  border: 2px solid rgba(245, 158, 11, 0.85);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   position: relative;
+  overflow: hidden;
+  padding: 3px;
 }
 
 .mfw-header-avatar svg,
 .mfw-header-avatar img {
-  width: 28px;
-  height: 28px;
+  width: 100%;
+  height: 100%;
+  max-width: 34px;
+  max-height: 38px;
   object-fit: contain;
+  display: block;
 }
 
 .mfw-header-avatar-status {

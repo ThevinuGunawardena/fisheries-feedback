@@ -217,34 +217,16 @@
   let currentLang = I18N[config.lang] ? config.lang : "en";
 
   // --------------------------------------------------------------------------
-  // Official Sri Lanka Fisheries Emblem (SVG Vector)
   // --------------------------------------------------------------------------
-  const FISHERIES_EMBLEM_SVG = `
-    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Outer gold ring -->
-      <circle cx="50" cy="50" r="47" stroke="#D97706" stroke-width="2.5" fill="#004D40"/>
-      <circle cx="50" cy="50" r="43" stroke="#F59E0B" stroke-width="1" stroke-dasharray="2 2" fill="none" opacity="0.8"/>
-      
-      <!-- Marine blue inner core -->
-      <circle cx="50" cy="50" r="39" fill="#00695C"/>
-      
-      <!-- Sun rays / Dawn over sea -->
-      <path d="M50 20 L50 25 M32 26 L36 29 M68 26 L64 29 M23 38 L27 40 M77 38 L73 40" stroke="#FBBF24" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="50" cy="32" r="7" fill="#FBBF24"/>
-      
-      <!-- Ocean Waves at base -->
-      <path d="M18 64 C26 60 34 66 42 62 C50 58 58 64 66 60 C74 56 82 62 82 62" stroke="#26A69A" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-      <path d="M15 72 C23 68 31 74 39 70 C47 66 55 72 63 68 C71 64 85 70 85 70" stroke="#80CBC4" stroke-width="2" stroke-linecap="round" fill="none"/>
-      
-      <!-- Traditional Outrigger Boat / Ship Bow Silhouette -->
-      <path d="M30 54 C38 52 62 52 70 54 L66 60 C58 62 42 62 34 60 Z" fill="#FDE68A"/>
-      <path d="M48 38 L48 53 M48 40 L60 48 L48 50 Z" fill="#F59E0B" stroke="#D97706" stroke-width="1"/>
-      
-      <!-- Anchor / Hook Motif -->
-      <path d="M50 62 V78 M42 70 C42 78 58 78 58 70" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-      <circle cx="50" cy="62" r="2.5" fill="#FBBF24"/>
-    </svg>
-  `;
+  // Official National Emblem of Sri Lanka
+  // --------------------------------------------------------------------------
+  const SRI_LANKA_EMBLEM_SRC =
+    (currentScript && currentScript.getAttribute("data-crest-url")) ||
+    (scriptBaseUrl ? scriptBaseUrl + "emblem-sri-lanka.png" : "emblem-sri-lanka.png");
+
+  function getEmblemHtml() {
+    return `<img src="${escapeHtml(SRI_LANKA_EMBLEM_SRC)}" alt="National Emblem of Sri Lanka" class="mfw-emblem-img" />`;
+  }
 
   // --------------------------------------------------------------------------
   // Helpers
@@ -327,7 +309,7 @@
         <!-- Floating Launcher Pill Button -->
         <button type="button" class="mfw-launcher" id="mfwLauncher" aria-haspopup="dialog" aria-expanded="false" aria-label="${escapeHtml(this.t("headerTitle"))}">
           <div class="mfw-crest-circle" aria-hidden="true">
-            ${FISHERIES_EMBLEM_SVG}
+            ${getEmblemHtml()}
             <span class="mfw-status-dot" aria-hidden="true"></span>
           </div>
           <div class="mfw-text-col">
@@ -345,7 +327,7 @@
             <div class="mfw-header-top-row">
               <div class="mfw-header-brand">
                 <div class="mfw-header-avatar" aria-hidden="true">
-                  ${FISHERIES_EMBLEM_SVG}
+                  ${getEmblemHtml()}
                   <span class="mfw-header-avatar-status" title="Active"></span>
                 </div>
                 <div class="mfw-header-titles">
