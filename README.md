@@ -98,38 +98,56 @@ php app/resend.php FISH-20261002-XLYZBW
 - Behind a reverse proxy/load balancer, `REMOTE_ADDR` will be the proxy's IP and the per-IP rate limit
   will treat everyone as one person. Trusted-proxy (`X-Forwarded-For`) handling is not included; add it in `submit.php` if you deploy behind a proxy.
 
-## Embedding on your main website
+## Embedding on https://www.fisheries.gov.lk/ (or any host site)
 
-You have two powerful options to add this to your main website:
+The chat widget is tailored specifically to match the **Ministry of Fisheries, Aquatic and Ocean Resources** website design system, official colors, and trilingual public communication standards.
 
-### Option 1: Floating Action Button Widget (Recommended – like the "TALK TO VC" / "TALK TO MINISTER" button)
+### Embedding Snippet (WordPress / Elementor / HTML)
 
-Add this **single script tag** before the closing `</body>` tag on any page of your main website:
+Paste this single `<script>` tag into your site's footer (e.g. via **Elementor → Custom Code**, **WP Header & Footer Scripts**, or before `</body>` in `footer.php`):
 
 ```html
-<!-- Floating Feedback Widget -->
-<script src="https://feedback.fisheries.gov.example/public/widget.js"
-        data-api-base="https://feedback.fisheries.gov.example/public/api/"
-        data-mode="minister">
+<!-- Ministry of Fisheries Chat & Feedback Floating Widget -->
+<script src="https://feedback.fisheries.gov.lk/widget.js"
+        data-api-base="https://feedback.fisheries.gov.lk/api/"
+        data-theme="ocean"
+        data-lang="en"
+        data-position="bottom-right"
+        data-teaser="true">
 </script>
 ```
 
-#### Customization Options (data-attributes)
+### Themes & Color Palettes
+
+| Theme (`data-theme`) | Colors | Visual Style |
+|---|---|---|
+| `ocean` *(Default)* | `#004D40` Deep Pine Teal, `#00695C` Marine Teal, `#26A69A` Vibrant Seafoam, `#F4F9F9` Mist | **Authentic fisheries.gov.lk palette.** Perfectly matches the site's primary navbar, header, and official tone. |
+| `coastal` | `#0D47A1` Deep Blue, `#1565C0` Maritime Blue, `#E1F0FE` Sky | Classic oceanic government blue palette. |
+| `minimal` | `#00796B` Subtle Marine, Pure White `#FFFFFF`, Neutral Sea Gray `#E2E8F0` | Ultra-clean, lightweight light card style. |
+
+### Configuration Options (`data-*` attributes)
 
 | Attribute | Default | Description |
 |---|---|---|
-| `data-mode` | `"minister"` | Preset style: `"minister"` (TALK TO MINISTER) or `"vc"` (TALK TO VC). |
-| `data-api-base` | Auto-detected | Full URL to the API folder ending with a slash (`.../api/`). |
-| `data-label-top` | `"TALK"` | Top text on the button. |
-| `data-label-prefix` | `"TO"` | Middle small text prefix. |
-| `data-label-target` | `"MINISTER"` | Main bold text on the button (e.g. `"VC"` or `"MINISTER"`). |
-| `data-crest` | `"fisheries"` | Crest emblem icon: `"fisheries"` or `"kdu"`. |
-| `data-crest-url` | `""` | Optional direct image URL for a custom institutional crest/logo. |
-| `data-position` | `"bottom-right"` | Screen dock position: `"bottom-right"` or `"bottom-left"`. |
-| `data-title` | `"Write to the Minister..."` | Title displayed at the top of the popup form. |
+| `data-theme` | `"ocean"` | Visual theme: `"ocean"` (official fisheries.gov.lk), `"coastal"`, or `"minimal"`. |
+| `data-lang` | `"en"` | Default language: `"en"` (English), `"si"` (සිංහල), or `"ta"` (தமிழ்). Citizens can also toggle language in the widget header. |
+| `data-position` | `"bottom-right"` | Screen position: `"bottom-right"` or `"bottom-left"`. |
+| `data-teaser` | `"true"` | Displays a friendly teaser callout bubble ("👋 Have a question or feedback?") above the button. |
+| `data-api-base` | Auto-detected | Full URL to the API folder ending with a slash (`https://domain/api/`). |
+| `data-auto-open` | `"false"` | If `"true"`, opens the chat modal automatically upon page load. |
 
-#### Live Interactive Demo
-Open `http://localhost:8000/demo.html` in your browser to see a realistic main website with the floating button and toggle between **TALK TO MINISTER** and **TALK TO VC**.
+### Human & Conversational Features
+
+1. **Trilingual Header Toggle:** Instant switching between **English**, **සිංහල (Sinhala)**, and **தமிழ் (Tamil)** for all labels, greetings, placeholders, and error messages.
+2. **Friendly Response Desk Tone:** Shows live desk status (*"🟢 Desk Active • Response within 24–48 hrs"*), conversational welcome bubble, and an approachable Sri Lanka Fisheries emblem.
+3. **Quick Topic Chips:** Tappable topic pills (🐟 Fish Prices, ⛽ Fuel, 🚤 Boats & Gear, 🌊 Harbours, 🛡️ Report Illegal Fishing, 🤝 Welfare, 💬 General Inquiry) that auto-fill the form.
+4. **Human Contact Priority:** Highlights phone number as the essential contact field for official follow-up; name and email remain optional for email confirmations.
+5. **Reference Code Tracking:** Generates an official reference code (e.g. `MF-2026-XXXX`) with a 1-click **Copy** button upon submission.
+
+#### Live Interactive Previews
+- **Full Website Simulation:** Open `http://localhost:8000/index.html` (simulates the entire `https://www.fisheries.gov.lk/` page with real-time theme & language switchers).
+- **Widget Demo:** Open `http://localhost:8000/demo.html` (lightweight standalone embed tester).
+- **Full-Page Form:** Open `http://localhost:8000/standalone.html`.
 
 ### Option 2: Inline iframe or Embedded Card
 

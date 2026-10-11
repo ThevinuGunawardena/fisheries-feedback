@@ -1,0 +1,34 @@
+Dear Sunil Perera,
+
+This email confirms that your submission has been SUCCESSFULLY RECEIVED by the Ministry of Fisheries.
+Your request has been officially recorded and its current status is: In Progress.
+
+=========================================================
+             SUBMISSION CONTENT SUMMARY
+=========================================================
+Reference Number : FISH-20261012-8JZC6X
+Receipt Status   : Successfully Received
+Current Status   : In Progress (Under Ministry Review)
+Date Submitted   : October 12, 2026, 12:14 AM (+0530)
+Topic            : Fuel prices or fuel access
+Contact Phone    : 0771234567
+Contact Name     : Sunil Perera
+Recipient Email  : sunil@example.com
+---------------------------------------------------------
+SUMMARY OF YOUR SUBMITTED MESSAGE (12 words):
+---------------------------------------------------------
+Testing feedback widget with authentic fisheries ocean teal theme and trilingual support.
+
+=========================================================
+WHAT HAPPENS NEXT?
+=========================================================
+1. Your message has been successfully received and logged into our database.
+2. Your case is currently marked as "In Progress" for official assessment.
+3. A Ministry officer is reviewing your submission and will contact
+   you on 0771234567 if further details are needed.
+4. Please retain your reference number (FISH-20261012-8JZC6X) for all future inquiries.
+
+If you did not submit this message, you may safely disregard this email.
+
+Sincerely,
+Ministry of Fisheries
