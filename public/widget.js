@@ -254,6 +254,16 @@
     }
   }
 
+  function ensureFavicon() {
+    if (!document.querySelector("link[rel*='icon']")) {
+      const link = document.createElement("link");
+      link.rel = "icon";
+      link.type = "image/png";
+      link.href = scriptBaseUrl ? scriptBaseUrl + "favicon.png" : "favicon.png";
+      document.head.appendChild(link);
+    }
+  }
+
   // --------------------------------------------------------------------------
   // Widget Controller Class
   // --------------------------------------------------------------------------
@@ -268,6 +278,7 @@
 
     init() {
       ensureStylesheet();
+      ensureFavicon();
       this.createDom();
       this.bindEvents();
       this.loadTopics();
