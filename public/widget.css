@@ -622,54 +622,6 @@
   color: var(--mfw-text);
 }
 
-/* Quick Topic Pills / Chips (Simple & Human Tap Selector) */
-.mfw-topic-chips-section {
-  margin-bottom: 16px;
-}
-
-.mfw-topic-chips-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--mfw-text);
-  margin-bottom: 8px;
-}
-
-.mfw-topic-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.mfw-chip {
-  background: #ffffff;
-  border: 1px solid var(--mfw-border);
-  color: var(--mfw-text);
-  padding: 6px 11px;
-  border-radius: var(--mfw-radius-full);
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  transition: all 0.15s ease;
-  user-select: none;
-}
-
-.mfw-chip:hover {
-  background: var(--mfw-bg-hover);
-  border-color: var(--mfw-primary-light);
-  transform: translateY(-1px);
-}
-
-.mfw-chip.mfw-chip-active {
-  background: var(--mfw-bg-tint);
-  border-color: var(--mfw-primary);
-  color: var(--mfw-primary-dark);
-  font-weight: 700;
-  box-shadow: 0 1px 3px rgba(0, 105, 92, 0.15);
-}
 
 /* ==========================================================================
    7. Friendly Form Layout & Inputs

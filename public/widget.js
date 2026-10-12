@@ -365,13 +365,6 @@
               <p class="mfw-chat-bubble-text" id="mfwBubbleText">${escapeHtml(this.t("chatBubbleText"))}</p>
             </div>
 
-            <!-- Quick Topic Pills / Chips -->
-            <div class="mfw-topic-chips-section">
-              <label class="mfw-topic-chips-label" id="mfwTopicChipsLabel">${escapeHtml(this.t("topicChipsLabel"))}</label>
-              <div class="mfw-topic-chips" id="mfwTopicChips">
-                <!-- Rendered dynamically -->
-              </div>
-            </div>
 
             <!-- Interactive Form -->
             <form id="mfwForm" novalidate>
@@ -553,7 +546,6 @@
 
       topicSelect.addEventListener("change", (e) => {
         this.selectedTopicCode = e.target.value;
-        this.highlightTopicChip(e.target.value);
         this.validateField("topic");
       });
 
@@ -592,7 +584,6 @@
 
       document.getElementById("mfwBubbleTitle").textContent = this.t("chatBubbleTitle");
       document.getElementById("mfwBubbleText").textContent = this.t("chatBubbleText");
-      document.getElementById("mfwTopicChipsLabel").textContent = this.t("topicChipsLabel");
 
       document.getElementById("mfwPhoneLabel").textContent = this.t("phoneLabel");
       document.getElementById("mfwPhoneHelp").textContent = this.t("phoneHelp");
@@ -628,7 +619,6 @@
 
     renderTopicOptions() {
       const topicSelect = document.getElementById("mfwTopic");
-      const chipsContainer = document.getElementById("mfwTopicChips");
       const currentSelected = this.selectedTopicCode || topicSelect.value;
 
       // Select Dropdown
@@ -640,25 +630,6 @@
         if (t.code === currentSelected) opt.selected = true;
         topicSelect.appendChild(opt);
       });
-
-      // Topic Chips
-      chipsContainer.innerHTML = "";
-      this.topics.forEach((t) => {
-        const chip = document.createElement("button");
-        chip.type = "button";
-        chip.className = "mfw-chip" + (t.code === currentSelected ? " mfw-chip-active" : "");
-        chip.setAttribute("data-topic", t.code);
-        chip.textContent = this.getTopicLabel(t.code, t.label);
-
-        chip.addEventListener("click", () => {
-          this.selectedTopicCode = t.code;
-          topicSelect.value = t.code;
-          this.highlightTopicChip(t.code);
-          this.validateField("topic");
-        });
-
-        chipsContainer.appendChild(chip);
-      });
     }
 
     getTopicLabel(code, defaultFallback) {
@@ -667,13 +638,6 @@
         return dict.topics[code];
       }
       return defaultFallback || code;
-    }
-
-    highlightTopicChip(topicCode) {
-      const chips = this.root.querySelectorAll(".mfw-chip");
-      chips.forEach((c) => {
-        c.classList.toggle("mfw-chip-active", c.getAttribute("data-topic") === topicCode);
-      });
     }
 
     open() {
@@ -881,7 +845,7 @@
         let data = {};
         try {
           data = await res.json();
-        } catch (_) {}
+        } catch (_) { }
 
         if (res.ok && data.ok) {
           this.showSuccess(data, payload.email);
@@ -930,7 +894,6 @@
 
       form.reset();
       this.selectedTopicCode = "";
-      this.highlightTopicChip("");
       ["mfwName", "mfwEmail", "mfwPhone", "mfwTopic", "mfwMessage"].forEach((id) => {
         this.clearError(id, id + "Error");
       });
