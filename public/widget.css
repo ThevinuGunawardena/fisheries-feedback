@@ -98,8 +98,9 @@
 
 .mfw-teaser-bubble {
   position: fixed;
-  bottom: 86px;
-  right: 24px;
+  top: calc(68% - 78px);
+  bottom: auto;
+  right: 12px;
   z-index: 2147483639;
   background: #ffffff;
   color: var(--mfw-text);
@@ -134,7 +135,7 @@
 
 .mfw-pos-left .mfw-teaser-bubble {
   right: auto;
-  left: 24px;
+  left: 12px;
 }
 .mfw-pos-left .mfw-teaser-bubble::after {
   right: auto;
@@ -189,17 +190,21 @@
 
 .mfw-launcher {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  top: 68%;
+  bottom: auto;
+  right: 0;
+  transform: translateY(-50%);
+  transform-origin: right center;
   z-index: 2147483640;
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 18px 6px 7px;
+  padding: 6px 16px 6px 7px;
   height: 52px;
   background: linear-gradient(135deg, var(--mfw-primary-dark) 0%, var(--mfw-primary) 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
-  border-radius: var(--mfw-radius-full);
+  border-right: none;
+  border-radius: var(--mfw-radius-full) 0 0 var(--mfw-radius-full);
   color: #ffffff;
   cursor: pointer;
   text-decoration: none;
@@ -212,13 +217,13 @@
 }
 
 .mfw-launcher:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-50%) translateX(-3px) scale(1.02);
   background: linear-gradient(135deg, var(--mfw-primary) 0%, var(--mfw-primary-light) 100%);
   box-shadow: 0 12px 28px -4px rgba(0, 77, 64, 0.5), 0 0 16px rgba(38, 166, 154, 0.35);
 }
 
 .mfw-launcher:active {
-  transform: translateY(0) scale(0.98);
+  transform: translateY(-50%) scale(0.98);
 }
 
 .mfw-launcher:focus-visible {
@@ -229,7 +234,15 @@
 /* Position options */
 .mfw-pos-left .mfw-launcher {
   right: auto;
-  left: 24px;
+  left: 0;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-left: none;
+  border-radius: 0 var(--mfw-radius-full) var(--mfw-radius-full) 0;
+  transform-origin: left center;
+}
+
+.mfw-pos-left .mfw-launcher:hover {
+  transform: translateY(-50%) translateX(3px) scale(1.02);
 }
 
 /* Emblem circle in launcher */
@@ -984,21 +997,24 @@
 
 @media (max-width: 580px) {
   .mfw-launcher {
-    bottom: 16px;
-    right: 16px;
+    top: 68%;
+    bottom: auto;
+    right: 0;
+    transform: translateY(-50%);
     height: 48px;
-    padding: 5px 14px 5px 6px;
+    padding: 5px 12px 5px 6px;
     gap: 9px;
   }
 
   .mfw-pos-left .mfw-launcher {
     right: auto;
-    left: 16px;
+    left: 0;
   }
 
   .mfw-teaser-bubble {
-    bottom: 74px;
-    right: 16px;
+    bottom: auto;
+    top: calc(68% - 72px);
+    right: 8px;
     max-width: calc(100vw - 32px);
   }
 
